@@ -1,0 +1,65 @@
+.I,data
+1,articl exist deal tss time share system oper system ibm comput richard alexand comp serv langmuir lab tss
+2,interest articl write either priev udo pooch prieve pooch richard alexand comp serv langmuir lab author pooch priev
+3,intermedi languag use construct multi target compil tcoll donna bergmark comp serv uri hall interm lang
+4,interest mechan commun disjoint process possibl exclus distribut environ would rather see descript complet mechan without implement oppos theoret work abstract problem remot procedur call messag pass exampl interest pavel curti comm mech disjoint process
+5,like paper design implement edit interfac window manag command interpret etc essenti issu human interfac design view improv user effici effect satisfact pavel curti edit interfac
+6,interest articl robot motion plan particularli geometr combinatori aspect interest dynam arm motion john hopcroft robot
+7,interest distribut algorithm concurr program process commun synchron use messag pass area particular interest includ fault toler techniqu understand correct algorithm fred schneider dist algorithm
+8,address scheme resourc network resourc address network oper system alison brown addr network
+9,secur consider local network network oper system distribut system alison brown secur network
+10,parallel languag languag parallel comput alec grimison comp serv uri hall parallel lang
+11,setl high level languag alec grimison setl high level lang
+12,portabl oper system ralph johnson portabl op sy
+13,code optim space effici ralph johnson code opt space
+14,find discuss optim implement sort algorithm databas manag applic kenneth wilson physic newman lab sort databas
+15,find discuss horizont microcod optim special emphasi optim loop global optim kenneth wilson horizont microcod opt
+16,find descript file handl oper system base multipl process messag pass kenneth wilson file handl dist sy
+17,optim intermedi machin code donna bergmark opt intermedi code
+18,languag compil parallel processor especi highli horizont microcod machin code compact donna bergmark lang parallel proc
+19,parallel algorithm chanderjit bajaj parallel algorithm
+20,graph theoret algorithm applic spar matric chanderjit bajaj graph alg sparc matric
+21,comput complex intract class complet reduct algorithm effici jim mildrew five sep queri comp complex intract c c red alg eff
+22,interest hide line hide surfac algorithm cylind toroid sphere cone rather special topic comput graphic walli dietrich hide line surf alg
+23,distribut comput structur algorithm ozalp babaoglu dist comp struct alg
+24,appli stochast process ozalp babaoglu appl stochast proc
+25,perform evalu model comput system ozalp babaoglu perf eval
+26,concurr control mechan oper system ozalp babaoglu concurr control
+27,memori manag aspect oper system ozalp babaoglu memori manag
+28,inform packet radio network particular interest algorithm packet rout deal chang network topographi interest hardwar use network dean jagel packet radio net
+29,number theoret algorithm especi involv prime number seri siev chin remaind theorem paul pritchard num theoret alg
+30,articl text format system includ see get system exampl nroff scribe bravo dean krafft text formatt
+31,like find articl describ use singular valu decomposit digit imag process applic includ find approxim origin imag restor imag subject nois articl subject h c andrew c l patterson outer product expans use digit imag process american mathemat monthli vol eighti two andrews patterson bengt aspval sing valu decomp
+32,like find articl describ graph algorithm base eigenvalu decomposit singular valu decomposit ajac matrix graph especi interest heurist algorithm graph color graph isomorph use method bengt aspval graph alg eigenvalu decomp
+33,articl sensit eigenvalu decomposit real matric particular zero one matric especi interest separ eigenspac correspond distinct eigenvalu articl subject c davi w kahn rotat eigenvector permut siam j numer analysi vol seven one one thousand nine hundr seventi g w stewart error bind approxim invari subspac close linear oper siam j numer analysi vol eight four one thousand nine hundr seventi one davis kahn stewart bengt aspval sen eigenv decomp real matric
+34,current interest isol root polynomi old articl heindel l e j acm vol eighteen five hundr thirti three five hundr forti eight would like find recent materi heindel gabi bracha isol root polynomi
+35,probabilist algorithm especi deal algebra symbol manipul exampl rabiin probabilist algorithm finit field siam waztch probabilist test polynomi ident siam rabinm  gabi bracha prob alg
+36,fast algorithm context free languag recognit par juri hartmani fast alg lang recog par
+37,articl describ relationship data type concurr e g type process synchron attempt two process type correct messag pass system notion type messag e way check sender messag receiv treat bite stream particular type hal perkin comp sci cornel
+38,type modul want entir literatur abstract data type sure phrase avoid interest question one check modul match context use hal perkin
+39,type compat mean languag allow programm defin type might want restrict extens languag allow definit abstract data type programm suppli definit oper like hal perkin
+40,list articl deal data type follow languag pascal clu alphard russel ada algol sixti eight el one list languag referenc frequent paper languag e g catch languag interest type structur might miss hal perkin
+41,theori distribut system databas subtop special interest includ reliabl fault toler distribut system atom distribut transact synchron algorithm resourc alloc lower bind model asynchron parallel system also theori commun process protocol michael j fischer comput sci yale univ ten hillhous ave p box two thousand one hundr fifti eight yale station new conn six thousand five hundr twenti
+42,comput perform evalu techniqu use pattern recognit cluster georg r cross lousiana state univ comp sci dept baton roug la seventi thousand eight hundr three
+43,analysi percept shape human comput shape descript shape recognit comput two dimension shape measur circular shape match georg r cross
+44,textur analysi comput digit textur analysi textur synthesi percept textur georg r cross
+45,use oper research model optim inform system perform includ fine tune decis secondari index select file reorgan distribut databas donald kraft louisiano state univ comp sci
+46,applic fuzzi subset theori cluster inform retriev problem includ perform evalu automat index consider donald kraft
+47,use bayesian decis model optim inform retriev system perform includ stop rule determin user ceas scan output retriev search donald kraft
+48,use comput scienc principl e g data structur numer method gener optim e g linear program algorithm includ issu khachian russian ellipsoid algorithm complex algorithm donald kraft
+49,role inform retriev knowledg base system e expert system donald h kraft
+50,parallel processor inform retriev walter rudd louisiana state univ comp sci
+51,parallel processor page algorithm walter rudd
+52,model simul agricultur ecosystem walter rudd
+53,mathemat induct group theori integ modulo probabl binomi coeffici binomi theorem homomorph morphism transit relat relat matrix h f mattson jr school comput inform scienc syracus univers three hundr thirteen link hall syracus n thirteen thousand two hundr ten
+54,semant program languag includ abstract specif data type denot semant proof correct hoare dijkstra michael arbib dept comput inform scienc univers massachusett amherst one thousand three
+55,anyth deal star height regular languag regular express regular event maura flatley comp sci cornel
+56,articl relat algebra theori semigroup monoid studi automata regular languag maura flatley
+57,abstract articl j backu program liber von neumann style function style algebra program cacm twenti one one thousand nine hundr seventi eight six hundr thirteen six hundr forti one r de millo r j lipton j perli letter acm forum cacm twenti two one thousand nine hundr seventi nine six hundr twenti nine six hundr thirti backus millo lipton perlis maura flatley comp sci cornel
+58,algorithm statist packag anova regress use least squar gener linear model system design capabl statist formula interest student test wilcoxon sign test multivari univari compon includ ed fox
+59,dictionari construct access method fast retriev word lexic item morpholog relat inform hash index method usual appli english spell natur languag problem ed fox
+60,hardwar softwar relat databas manag system databas packag back end comput special associ hardwar microcomput attach disk head thing like rap relat network codasyl hierarch model system like system r im adaba total etc ed fox
+61,inform retriev articl gerard salton other cluster bibliograph coupl use citat co citat vector space model boolean search method use invert file feedback etc salton ed fox
+62,result relat parallel complex theori pram uniform circuit mark w krentel comp sci cornel
+63,algorithm parallel comput especi comparison parallel sequenti algorithm mark w krentel
+64,list articl el one ecl el one may give el one rememb hal perkin comp sci cornel
