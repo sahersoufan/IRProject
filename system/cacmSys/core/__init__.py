@@ -1,1 +1,0 @@
-#TODO process date from query
