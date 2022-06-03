@@ -407,7 +407,7 @@ similar to those that have been demonstrated in experiments on judgements
 under uncertainty.  These biases are shared by both naive and sophisticated
 subjects and cause the inquirer searching for documents on a large interactive
 system to construct and modify queries inefficiently.  A searching algorithm
-is suggested that helps the inquirer to avoid the effect of these biases.
+is suggested that helps the inuirer to avoid the effect of these biases.
 .B
 (JASIS, Vol. 31, No. 4, July 1980, pp. 271-277)
 
