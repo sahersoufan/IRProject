@@ -1,0 +1,65 @@
+,.I,.T,.A,.W
+0,1.0,,,articl exist deal tss time share oper system ibm comput
+1,2.0,interest articl write either priev udo pooch,prieve  pooch ,interest articl write either priev udo pooch
+2,3.0,,,intermedi languag use construct multi target compil tcoll
+3,4.0,commun disjoint process possibl exclus distribut environ would rather see descript complet mechan without implement oppos theoret work abstract problem remot procedur call messag pas exampl interest,,commun disjoint process possibl exclus distribut environ would rather see descript complet mechan without implement oppos theoret work abstract problem remot procedur call messag pas exampl interest
+4,5.0,,,like paper implement edit window manag command interpret etc essenti issu human interfac design view improv user effici effect satisfact
+5,6.0,,,articl robot plan particularli geometr combinatori aspect interest dynam arm motion
+6,7.0,distribut concurr program process commun synchron use messag pas area particular interest includ fault toler techniqu understand correct algorithm,,distribut concurr program process commun synchron use messag pas area particular interest includ fault toler techniqu understand correct algorithm
+7,8.0,address resourc network,,address scheme resourc network resourc address network oper system
+8,9.0,network system,,secur consider local network network oper system distribut system
+9,10.0,parallel languag,,parallel languag languag parallel comput
+10,11.0,,,setl high level languag
+11,12.0,,,portabl oper system
+12,13.0,,,code optim space effici
+13,14.0,,,find discuss optim implement sort algorithm databas manag applic
+14,15.0,,,find discuss horizont microcod special emphasi loop global optim
+15,16.0,,,find descript file handl oper system base multipl process messag pas
+16,17.0,,,optim intermedi machin code
+17,18.0,,,languag compil parallel processor especi highli horizont microcod machin code compact
+18,19.0,,,parallel algorithm
+19,20.0,,,graph theoret algorithm applic spar matric
+20,21.0,,,comput complex intract class complet reduct algorithm effici
+21,22.0,,,interest hidden line hide surfac algorithm cylind toroid sphere cone rather special topic comput graphic
+22,23.0,,,distribut comput structur algorithm
+23,24.0,,,appli stochast process
+24,25.0,,,perform evalu model comput system
+25,26.0,,,concurr control mechan oper system
+26,27.0,,,memori manag aspect oper system
+27,28.0,inform radio particular algorithm packet rout deal chang topographi interest hardwar use network,,inform radio particular algorithm packet rout deal chang topographi interest hardwar use network
+28,29.0,,,theoret algorithm especi involv prime number seri siev chine remaind theorem
+29,30.0,,,articl text format includ see get system exampl nroff scribe bravo
+30,31.0,c,andrews  patterson ,like desrib singular valu decomposit applic includ find approxim origin restor nois articl subject h c andrew c l patterson out product expans use digit imag process american mathemat monthli vol eighti two
+31,32.0,,,like find articl describ base eigenvalu singular valu decomposit ajac matrix especi interest heurist algorithm color graph isomorph use method
+32,33.0,articl eigenvalu matric w siam j numer analysi vol thousand nine hundr seventi one,davis  kahn  stewart ,articl sensit eigenvalu decomposit real matric particular zero matric especi interest separ eigenspac correspond distinct eigenvalu articl subject c davi w kahn rotat eigenvector permut siam j numer analysi vol seven thousand nine hundr seventi g w stewart error bound approxim invari subspac close linear oper siam j numer analysi vol eight four one thousand nine hundr seventi one
+33,34.0,,heindel ,current interest isol root polynomi old articl heindel l e j acm vol eighteen thirti three five hundr forti eight would like find recent materi
+34,35.0,,rabin m ,especi deal algebra symbol manipul exampl rabiin algorithm finit field waztch probabilist test polynomi ident siam
+35,36.0,fast algorithm context free languag recognit par,,fast algorithm context free languag recognit par
+36,37.0,e,,articl dscrib relationship data concurr e g synchron attempt two process correct pas system notion e way check sender messag receiv treat bit stream particular type
+37,38.0,,,want entir literatur abstract data type sure phrase avoid interest question one check modul match context use
+38,39.0,type languag allow programm definit,,type compat mean languag allow programm defin type might want restrict extens languag allow definit abstract data type programm suppli definit oper like
+39,40.0,articl deal data follow pascal clu alphard russel ada algol sixti eight el one list referenc frequent paper e g catch languag interest type structur might miss,,articl deal data follow pascal clu alphard russel ada algol sixti eight el one list referenc frequent paper e g catch languag interest type structur might miss
+40,41.0,,,databas subtop special interest includ reliabl fault toler atom distribut transact synchron algorithm resourc alloc low bound model asynchron parallel system also theori commun process protocol
+41,42.0,,,comput perform evalu techniqu use pattern recognit cluster
+42,43.0,,,analysi percept human descript recognit comput two dimension measur circular shape match
+43,44.0,analysi textur,,analysi comput digit analysi textur synthesi percept textur
+44,45.0,use oper research model optim inform system perform includ fine tune decis secondari index select file reorgan distribut databas,,use oper research model optim inform system perform includ fine tune decis secondari index select file reorgan distribut databas
+45,46.0,applic fuzzi subset theori cluster inform retriev problem includ perform evalu automat index consider,,applic fuzzi subset theori cluster inform retriev problem includ perform evalu automat index consider
+46,47.0,,,use bayesian decis model optim inform system perform includ stop rule determin user ceas scan output retriev search
+47,48.0,e,,us comput scienc principl e data structur numer method gener optim e g linear program includ issu khachian russian ellipsoid complex algorithm
+48,49.0,,,role inform retriev knowledg base e expert system
+49,50.0,,,parallel processor inform retriev
+50,51.0,,,parallel processor page algorithm
+51,52.0,,,model simul agricultur ecosystem
+52,53.0,,,mathemat induct group theori integ modulo probabl coeffici binomi theorem homomorph morphism transit relat matrix
+53,54.0,,hoare  dijkstra ,program languag includ abstract specif data type denot semant proof correct
+54,55.0,,,anyth deal star height languag express regular event
+55,56.0,,,articl relat algebra theori semigroup monoid studi automaton regular languag
+56,57.0,j program style cacm twenti thousand seventi one r nine six hundr,backus  millo  lipton  perlis ,abstract articl j backu program liber von neumann style function style algebra program cacm twenti thousand seventi eight thirteen forti one r de millo r j lipton j perli letter acm forum cacm twenti two one thousand seventi nine six hundr twenti nine six hundr thirti
+57,58.0,,,algorithm packag anova regress use least squar gener linear model system design capabl statist formula interest student wilcoxon sign test multivari univari compon includ
+58,59.0,,,dictionari construct access fast retriev word lexic item morpholog relat inform hash index method usual appli english spell natur languag problem
+59,60.0,,,softwar manag databas packag back end comput special associ hardwar microcomput attach disk head thing rap relat network codasyl hierarch model like system r im adaba total etc
+60,61.0,inform retriev articl gerard salton other cluster bibliograph coupl co citat vector space model boolean search method use invert file feedback etc,salton ,inform retriev articl gerard salton other cluster bibliograph coupl co citat vector space model boolean search method use invert file feedback etc
+61,62.0,,,result relat parallel complex theori pram uniform circuit
+62,63.0,algorithm parallel,,algorithm parallel comput especi comparison parallel sequenti algorithm
+63,64.0,el one,,list articl ecl el one may give el one rememb

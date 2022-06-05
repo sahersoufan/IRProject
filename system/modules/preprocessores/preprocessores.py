@@ -70,7 +70,6 @@ def removeStopWords(text):
 
 import numpy as np
 def removeOutliers(tokens):
-    #TODO rename it 
     '''remove outliers from wach document'''
     listOfTokens = tokens.split()
     fdist = FreqDist(word for word in listOfTokens)
@@ -114,7 +113,7 @@ def addMostFreq(tokens):
     stlis = []
 
     for i in range(0,len(freqOfWords)):
-        if freqOfWords[i] >= AVG:
+        if freqOfWords[i] > AVG:
             stlis.append(fdistKeys[i])
 
     
@@ -133,8 +132,6 @@ def stemWords(text):
     stems = []
     for word in wt:
         temp = stemmer.stem(word)
-        # if not temp == word:
-        #     temp = correctWords(temp)
         stems.append(temp)
     return ' '.join(stems)
 
@@ -160,6 +157,23 @@ def lemmatizeWords(text):
     return ' '.join(lemmas)
 
 ################################################################
+from nltk.metrics.distance import jaccard_distance
+from nltk.util import ngrams
+from nltk.corpus import words
 
+correct_words = words.words()
+result = []
 
+def correctWords(text):
+    for word in text.split():
+        try:
+            temp = [(jaccard_distance(set(ngrams(word, 2)),
+                                      set(ngrams(w, 2))),w)
+                                      for w in correct_words if w[0] == word[0]]
+            result.append(sorted(temp, key = lambda val:val[0])[0][1])
+        except:
+            pass
 
+    return ' '.join(result)
+
+################################################################

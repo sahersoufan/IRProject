@@ -88,8 +88,6 @@ def calcPrecisionAtK(resData:pd.DataFrame, qrelsData: pd.DataFrame):
     precisionsAtK:list = []
 
     for i in resData.index:
-        precisionOnQuery = []
-
         resArray = resData.loc[i].to_numpy()
         qresArray = qrelsData.loc[qrelsData['.I'] == i+1, 'data'].to_numpy()
         
@@ -99,12 +97,56 @@ def calcPrecisionAtK(resData:pd.DataFrame, qrelsData: pd.DataFrame):
         resArray, qresArray = reSizeLists(resArray, qresArray)
         precisionsAtK.append(precision_score(qresArray, resArray, average='micro'))
 
-    return precisionsAtK
+    return sum(precisionsAtK) / len(precisionsAtK)
 
 ########################################################################
 
+def calcRecallAtK(resData:pd.DataFrame, qrelsData: pd.DataFrame):
+    '''calcualte just recall for one query or more'''
+    recallsAtK:list = []
+
+    for i in resData.index:
+
+        resArray = resData.loc[i].to_numpy()
+        qresArray = qrelsData.loc[qrelsData['.I'] == i+1, 'data'].to_numpy()
+        
+        if len(qresArray) == 0: 
+            continue
+
+        resArray, qresArray = reSizeLists(resArray, qresArray)
+        recallsAtK.append(recall_score(qresArray, resArray, average='micro'))
+
+    return sum(recallsAtK) / len(recallsAtK)
+
+########################################################################
+
+def calcMeanReciprocalRank(resData:pd.DataFrame, qrelsData: pd.DataFrame):
+
+    resultDataFrame = pd.DataFrame(columns=['.I','data', 'rank'])
 
 
+    for row in resData.index:
+        temp = resData.loc[row].to_list()
+        ke = []
+        rank = []
+        for i in range(0,len(temp)):
+            ke.append(row + 1)
+            rank.append(i+1)
+        lot = zip(ke,temp, rank)
+        tempdata = pd.DataFrame(lot, columns=['.I','data', 'rank'])
+
+        resultDataFrame = resultDataFrame.append(tempdata, ignore_index=True)
+
+    
+    MAX_RANK = 100000
+
+    hits = pd.merge(qrelsData, resultDataFrame,
+        on=[".I", "data"],
+        how="left").fillna(MAX_RANK)
+
+    mrr = (1 / hits.groupby('.I')['rank'].min()).mean()
+
+    return mrr
 
 
 

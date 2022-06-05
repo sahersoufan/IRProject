@@ -12,7 +12,6 @@ transformer = None
 tfidfTable  = None
 def initializeTfidfTable(data: pd.DataFrame):
     ''' put cisi data in pipelinethen fit and transform it and return tfidf Table'''
-    #TODO  check this
     global transformer, tfidfTable
     transformer = FeatureUnion([
                       ('title_tfidf', 
@@ -21,7 +20,7 @@ def initializeTfidfTable(data: pd.DataFrame):
                                   FunctionTransformer(lambda x: x['.T'], 
                                                       validate=False)),
                                 ('tfidf', 
-                                  TfidfVectorizer(norm='l2' ,ngram_range=(1,4)))]))                              
+                                  TfidfVectorizer(norm='l2' ,ngram_range=(1,2)))]))                              
                       ,('abstract_tfidf',
                      Pipeline([('extract_field',
                                 FunctionTransformer(lambda x: x['.W'],
@@ -79,7 +78,7 @@ def search(qDF:pd.DataFrame,data:pd.DataFrame, n):
         tempIds = getSimilars(qDF, n)
         tempList = []
         for id in tempIds:
-            tempList.append(data.loc, '.I')
+            tempList.append(data.loc[id,'.I'])
 
         for id in range(0,n):
             resultlis.append(tempList[id])
