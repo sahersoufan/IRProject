@@ -50,7 +50,7 @@ def publicationPreProcesse(p):
     try:
         return pd.to_datetime(p)
     except:
-        return None
+        return ''
 
 ########################################################################
 
@@ -153,17 +153,23 @@ def preprocesseQuery(dataFrame:pd.DataFrame):
 #                           search input section
 ########################################################################
 
-def preprocesseSearchInput(data) -> pd.DataFrame:
+
+def preprocesseSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data)
     tempT = addMostFreq(tempW)
     tempA = ''
-
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
     seriesDict['.I'] = tempI
     seriesDict['data'] = ' '.join([tempT, tempA, tempW])
+    seriesDict['.B'] = tempB
 
 
     psi = psi.append(seriesDict, ignore_index=True)
@@ -173,17 +179,37 @@ def preprocesseSearchInput(data) -> pd.DataFrame:
 
 ########################################################################
 
-def preprocesseStructuredSearchInput(data) -> pd.DataFrame:
+def SEAuthorPreProcesse(a):
+    tempText = a
+    tempText = toLower(tempText)
+    lis = tempText.split(' ')
+    names = ' '
+    l = []
+    for word in lis:
+          l.append(removePunctuation(word))
+    names = ' '.join(l)
+    return names
+
+########################################################################
+
+def preprocesseStructuredSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data.get('.W'))
     tempT = qTitlePreProcesse(data.get('.T'))
-    tempA = qAuthorPreProcesse(data.get('.A'))
+    tempA = SEAuthorPreProcesse(data.get('.A'))
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
 
     seriesDict['.I'] = tempI
     seriesDict['data'] = ' '.join([tempT, tempA, tempW])
+    seriesDict['.B'] = tempB
 
     psi = psi.append(seriesDict, ignore_index=True)
     psi.fillna('', inplace=True)

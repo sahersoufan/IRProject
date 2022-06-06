@@ -50,8 +50,11 @@ def authorPreProcesse(a):
 ########################################################################
 
 def publicationPreProcesse(p):
-    tempText = p.replace('CACM ','')
-    return pd.to_datetime(tempText)
+    try:
+        tempText = p.replace('CACM ','')
+        return pd.to_datetime(tempText)
+    except:
+        return ''
 
 ########################################################################
 
@@ -62,7 +65,7 @@ def preprocessedCacmData(dataFrame:pd.DataFrame):
     seriesData = seriesDict.copy()
     for i in dataFrame.index:
         try:
-            tempT = tempA = tempW  = None
+            tempT = tempA = tempW  =tempB = None
             if not dataFrame.loc[i, '.T'] == '':
                 tempT = TitlePreProcesse(dataFrame.loc[i, '.T'])
             if not dataFrame.loc[i, '.A'] == '':
@@ -169,20 +172,27 @@ def preprocesseQuery(dataFrame:pd.DataFrame):
 #                           search input section
 ########################################################################
 
-def preprocesseSearchInput(data) -> pd.DataFrame:
+def preprocesseSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data)
     tempT = addMostFreq(tempW)
     tempA = ''
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
 
     seriesDict['.I'] = tempI
     seriesDict['.T'] = tempT
     seriesDict['.A'] = tempA
     seriesDict['.W'] = tempW
-
+    seriesDict['.B'] = tempB
+   
     psi = psi.append(seriesDict, ignore_index=True)
     psi.fillna('', inplace=True)
 
@@ -190,25 +200,42 @@ def preprocesseSearchInput(data) -> pd.DataFrame:
 
 ########################################################################
 
-def preprocesseStructuredSearchInput(data) -> pd.DataFrame:
+def SEAuthorPreProcesse(a):
+    tempText = a
+    tempText = toLower(tempText)
+    lis = tempText.split(' ')
+    names = ' '
+    l = []
+    for word in lis:
+          l.append(removePunctuation(word))
+    names = ' '.join(l)
+    return names
+
+
+########################################################################
+
+def preprocesseStructuredSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data.get('.W'))
     tempT = qTitlePreProcesse(data.get('.T'))
-    tempA = qAuthorPreProcesse(data.get('.A'))
+    tempA = SEAuthorPreProcesse(data.get('.A'))
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
 
     seriesDict['.I'] = tempI
     seriesDict['.T'] = tempT
     seriesDict['.A'] = tempA
     seriesDict['.W'] = tempW
+    seriesDict['.B'] = tempB
 
     psi = psi.append(seriesDict, ignore_index=True)
     psi.fillna('', inplace=True)
 
     return psi
-
-
-
-

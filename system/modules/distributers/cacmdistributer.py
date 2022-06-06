@@ -86,7 +86,6 @@ def distributeCacmQrel(qrelsData):
     seriesData = seriesDict.copy()
     for i in qrelsData:
         try:
-            #TODO may cause error
             element = i.split()
             seriesData['.I'] = int(element[0])
             seriesData['data'] = int(element[1])

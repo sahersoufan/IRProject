@@ -1,3 +1,4 @@
+from unittest import skip
 from ..distributers import cisidistibuter
 from ..paths import paths 
 from ..preprocessores import cisiPreProcess,cisiPreProcessWE, preprocessores
@@ -21,6 +22,7 @@ def initializeCisimodel():
     
     cisiAfterPreprocessed = cisiPreProcess.preprocessedCisiData(cisiAfterDistribute)
     cisiAfterPreprocessed.fillna('', inplace=True)
+    cisiAfterPreprocessed['.B'] = pd.to_datetime(cisiAfterPreprocessed['.B'])
 
     cisiAfterDistribute.to_csv(paths.CISICLEANEDDATA)
     cisiAfterPreprocessed.to_csv(paths.CISIPREPROCESSEDDATA)
@@ -38,6 +40,7 @@ def initializeCisiWEmodel():
     cisiAfterPreprocessedWE = cisiPreProcessWE.preprocessedData(cisiAfterDistribute)
     cisiAfterPreprocessedWE.fillna('', inplace=True)
     cisiAfterPreprocessedWE.to_csv(paths.CISIPREPROCESSEDDATAWE)
+    cisiAfterPreprocessedWE['.B'] = pd.to_datetime(cisiAfterPreprocessedWE['.B'])
 
     cisiWEModel.initializeWEModel(cisiAfterPreprocessedWE)
 
@@ -55,6 +58,7 @@ def upServer():
 
         cisiAfterPreprocessed = pd.read_csv(paths.CISIPREPROCESSEDDATA)
         cisiAfterPreprocessed.fillna('', inplace=True)
+        cisiAfterPreprocessed['.B'] = pd.to_datetime(cisiAfterPreprocessed['.B'])
 
         cisiModel.initializeTfidfTable(data=cisiAfterPreprocessed)
     else:
@@ -64,9 +68,14 @@ def upServer():
 
 def upServerWE():
     if os.path.exists(path=paths.CISIPREPROCESSEDDATAWE):
-        global cisiAfterPreprocessedWE
+        global cisiAfterPreprocessedWE, cisiAfterDistribute
+
+        cisiAfterDistribute = pd.read_csv(paths.CISICLEANEDDATA)
+        cisiAfterDistribute.fillna('', inplace=True)
+
         cisiAfterPreprocessedWE = pd.read_csv(paths.CISIPREPROCESSEDDATAWE)
         cisiAfterPreprocessedWE.fillna('', inplace=True)
+        cisiAfterPreprocessedWE['.B'] = pd.to_datetime(cisiAfterPreprocessedWE['.B'])
 
         cisiWEModel.initializeWEModel(cisiAfterPreprocessedWE)
     else:
@@ -224,76 +233,87 @@ def evaluateWESearch(n = 10):
 #                           SEARCH 
 ################################################################
 
-def search(data, n):
-    dataAfCorrection = preprocessores.correctWords(data)
+def search(data):
+    dataAfCorrection = preprocessores.correctWords(data.get('query'))
     dataPD: pd.DataFrame = cisiPreProcess.preprocesseSearchInput(data)
     global cisiAfterPreprocessed, cisiAfterDistribute
-    resultIds = cisiModel.search(dataPD, cisiAfterPreprocessed, n)
+    resultIds = cisiModel.search(dataPD, cisiAfterPreprocessed, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{},
             'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cisiAfterDistribute.loc[cisiAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+    return resultToDict(resultDict, resultIds)
+
 
 ################################################################
 
-def structuredSearch(data, n):
+def structuredSearch(data):
     # dataAfCorrection = preprocessores.correctWords(data)
     dataPD: pd.DataFrame = cisiPreProcess.preprocesseStructuredSearchInput(data)
     global cisiAfterPreprocessed, cisiAfterDistribute
-    resultIds = cisiModel.search(dataPD, cisiAfterPreprocessed, n)
+    resultIds = cisiModel.search(dataPD, cisiAfterPreprocessed, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{}
             # 'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cisiAfterDistribute.loc[cisiAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+
+    return resultToDict(resultDict, resultIds)
+
+
 
 ################################################################
 
-def searchWE(data, n):
-    dataAfCorrection = preprocessores.correctWords(data)
+def searchWE(data):
+    dataAfCorrection = preprocessores.correctWords(data.get('query'))
     dataPD: pd.DataFrame = cisiPreProcessWE.preprocesseSearchInput(data)
-    global cisiAfterPreprocessed, cisiAfterDistribute
-    resultIds = cisiWEModel.search(dataPD, cisiAfterPreprocessed, n)
+    global cisiAfterPreprocessedWE
+    resultIds = cisiWEModel.search(dataPD, cisiAfterPreprocessedWE, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{},
             'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cisiAfterDistribute.loc[cisiAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+    return resultToDict(resultDict, resultIds)
+
 
 ################################################################
 
-def structuredSearchWE(data, n):
+def structuredSearchWE(data):
     # dataAfCorrection = preprocessores.correctWords(data)
     dataPD: pd.DataFrame = cisiPreProcessWE.preprocesseStructuredSearchInput(data)
-    global cisiAfterPreprocessed, cisiAfterDistribute
-    resultIds = cisiWEModel.search(dataPD, cisiAfterPreprocessed, n)
+    global cisiAfterPreprocessedWE
+    resultIds = cisiWEModel.search(dataPD, cisiAfterPreprocessedWE, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{}
             # 'correction':dataAfCorrection
         }
     }
+    return resultToDict(resultDict, resultIds)
+
+
+
+
+################################################################
+##                          HELPERS
+################################################################
+def resultToDict(resultDict, resultIds):
+    global cisiAfterDistribute
     for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cisiAfterDistribute.loc[cisiAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
+        temp = cisiAfterDistribute.loc[cisiAfterDistribute['.I'] == resultIds[i],\
+             ['.T', '.A', '.W', '.B']].to_dict()
+#TODO tell said about this
+        tk = list(temp.keys())
+        for sk in tk:
+            k = list(temp[sk].keys())
+            temp[sk] = temp[sk][k[0]]
+
+
+        resultDict['reslutDictionary']['result'][i] = temp
+
     return resultDict

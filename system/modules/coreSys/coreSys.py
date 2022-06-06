@@ -13,12 +13,12 @@ def initialize():
     cisiCore.initializeCisiWEmodel()
     cisiCore.initializeCisiWEQuery()
 
-    #CACM
-    cacmCore.initializeCacmmodel()
+    # #CACM
+    cacmCore.initializeCacmModel()
     cacmCore.initializeCacmQuery()
     cacmCore.initializeCacmQREL()
 
-    cacmCore.initializeCacmWEmodel()
+    cacmCore.initializeCacmWEModel()
     cacmCore.initializeCacmWEQuery()
 
 
@@ -28,12 +28,12 @@ def initialize():
 
 def upServer():
     #CISI
-    # cisiCore.upServer()
-    # cisiCore.upServerQuery()
-    # cisiCore.upServerQREL()
+    cisiCore.upServer()
+    cisiCore.upServerQuery()
+    cisiCore.upServerQREL()
 
-    # cisiCore.upServerWE()
-    # cisiCore.upServerWEQuery()
+    cisiCore.upServerWE()
+    cisiCore.upServerWEQuery()
 
     #CACM
     cacmCore.upServer()
@@ -50,15 +50,15 @@ def upServer():
 def search(data:dict):
     if data.get(corpus) == 'cisi':
         if data.get('WE') == True:
-            return cisiCore.searchWE(data=data.get('query'), n=data.get('n'))
+            return cisiCore.searchWE(data)
         else:
-            return cisiCore.search(data=data.get('query'), n=data.get('n'))
+            return cisiCore.search(data)
 
     elif data.get(corpus) == 'cacm':
         if data.get('WE') == True:
-            return cacmCore.searchWE(data=data.get('query'), n=data.get('n'))
+            return cacmCore.searchWE(data)
         else:
-            return cacmCore.search(data=data.get('query'), n=data.get('n'))
+            return cacmCore.search(data)
     else:
         raise
 ################################################################
@@ -66,15 +66,15 @@ def search(data:dict):
 def structuredSearch(data:dict):
     if data.get(corpus) == 'cisi':
         if data.get('WE') == True:
-            return cisiCore.structuredSearchWE(data=data.get('query'), n=data.get('n'))
+            return cisiCore.structuredSearchWE(data)
         else:
-            return cisiCore.structuredSearch(data=data.get('query'), n=data.get('n'))
+            return cisiCore.structuredSearch(data)
     
     elif data.get(corpus) == 'cacm':
         if data.get('WE') == True:
-            return cacmCore.structuredSearchWE(data=data.get('query'), n=data.get('n'))
+            return cacmCore.structuredSearchWE(data)
         else:
-            return cacmCore.structuredSearch(data=data.get('query'), n=data.get('n'))
+            return cacmCore.structuredSearch(data)
 
     else:
         raise

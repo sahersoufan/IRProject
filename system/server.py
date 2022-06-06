@@ -20,11 +20,10 @@ def upserver():
         coreSys.upServer()
         return jsonify(success=True)
     except:
-        raise
         return jsonify(success=False)   
 
 
-@app.route('/evaluateCisi', methods=['GET'])
+@app.route('/evaluate', methods=['GET'])
 def evaluateCisi():
     try:
         data = request.get_json(force=True)
@@ -51,6 +50,8 @@ def structuredSearch():
         return jsonify(res)
     except:
         return jsonify(success=False)
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)

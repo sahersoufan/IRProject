@@ -21,6 +21,7 @@ def initializeCacmModel():
     
     cacmAfterPreprocessed = cacmPreProcess.preprocessedCacmData(cacmAfterDistribute)
     cacmAfterPreprocessed.fillna('', inplace=True)
+    cacmAfterPreprocessed['.B'] = pd.to_datetime(cacmAfterPreprocessed['.B'])
 
     cacmAfterDistribute.to_csv(paths.CACMCLEANEDDATA)
     cacmAfterPreprocessed.to_csv(paths.CACMPREPROCESSEDDATA)
@@ -37,6 +38,7 @@ def initializeCacmWEModel():
     global cacmAfterPreprocessedWE
     cacmAfterPreprocessedWE = cacmPreProcessWE.preprocessedData(cacmAfterDistribute)
     cacmAfterPreprocessedWE.fillna('', inplace=True)
+    cacmAfterPreprocessedWE['.B'] = pd.to_datetime(cacmAfterPreprocessedWE['.B'])
 
     cacmAfterPreprocessedWE.to_csv(paths.CACMPREPROCESSEDDATAWE)
 
@@ -56,6 +58,7 @@ def upServer():
 
         cacmAfterPreprocessed = pd.read_csv(paths.CACMPREPROCESSEDDATA)
         cacmAfterPreprocessed.fillna('', inplace=True)
+        cacmAfterPreprocessed['.B'] = pd.to_datetime(cacmAfterPreprocessed['.B'])
 
         cacmModel.initializeTfidfTable(data=cacmAfterPreprocessed)
     else:
@@ -65,9 +68,13 @@ def upServer():
 
 def upServerWE():
     if os.path.exists(path=paths.CACMPREPROCESSEDDATAWE):
-        global cacmAfterPreprocessedWE
+        global cacmAfterPreprocessedWE, cacmAfterDistribute
+        cacmAfterDistribute = pd.read_csv(paths.CACMCLEANEDDATA)
+        cacmAfterDistribute.fillna('', inplace=True)
+        
         cacmAfterPreprocessedWE = pd.read_csv(paths.CACMPREPROCESSEDDATAWE)
         cacmAfterPreprocessedWE.fillna('', inplace=True)
+        cacmAfterPreprocessedWE['.B'] = pd.to_datetime(cacmAfterPreprocessedWE['.B'])
 
         cacmWEModel.initializeWEModel(cacmAfterPreprocessedWE)
     else:
@@ -225,76 +232,83 @@ def evaluateWESearch(n = 10):
 #                           SEARCH 
 ################################################################
 
-def search(data, n):
-    dataAfCorrection = preprocessores.correctWords(data)
+def search(data):
+    dataAfCorrection = preprocessores.correctWords(data.get('query'))
     dataPD: pd.DataFrame = cacmPreProcess.preprocesseSearchInput(data)
     global cacmAfterPreprocessed, cacmAfterDistribute
-    resultIds = cacmModel.search(dataPD, cacmAfterPreprocessed, n)
+    resultIds = cacmModel.search(dataPD, cacmAfterPreprocessed, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{},
             'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cacmAfterDistribute.loc[cacmAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+    return resultToDict(resultDict, resultIds)
+
 
 ################################################################
 
-def structuredSearch(data, n):
+def structuredSearch(data):
     # dataAfCorrection = preprocessores.correctWords(data)
     dataPD: pd.DataFrame = cacmPreProcess.preprocesseStructuredSearchInput(data)
     global cacmAfterPreprocessed, cacmAfterDistribute
-    resultIds = cacmModel.search(dataPD, cacmAfterPreprocessed, n)
+    resultIds = cacmModel.search(dataPD, cacmAfterPreprocessed, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{}
             # 'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cacmAfterDistribute.loc[cacmAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+    return resultToDict(resultDict, resultIds)
+
 
 ################################################################
 
-def searchWE(data, n):
-    dataAfCorrection = preprocessores.correctWords(data)
+def searchWE(data):
+    dataAfCorrection = preprocessores.correctWords(data.get('query'))
     dataPD: pd.DataFrame = cacmPreProcessWE.preprocesseSearchInput(data)
-    global cacmAfterPreprocessed, cacmAfterDistribute
-    resultIds = cacmWEModel.search(dataPD, cacmAfterPreprocessed, n)
+    global cacmAfterPreprocessedWE
+    resultIds = cacmWEModel.search(dataPD, cacmAfterPreprocessedWE, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{},
             'correction':dataAfCorrection
         }
     }
-    for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cacmAfterDistribute.loc[cacmAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
-    return resultDict
+    return resultToDict(resultDict, resultIds)
 
 ################################################################
 
-def structuredSearchWE(data, n):
+def structuredSearchWE(data):
     # dataAfCorrection = preprocessores.correctWords(data)
     dataPD: pd.DataFrame = cacmPreProcessWE.preprocesseStructuredSearchInput(data)
-    global cacmAfterPreprocessed, cacmAfterDistribute
-    resultIds = cacmWEModel.search(dataPD, cacmAfterPreprocessed, n)
+    global cacmAfterPreprocessedWE
+    resultIds = cacmWEModel.search(dataPD, cacmAfterPreprocessedWE, data.get('n'))
     resultDict = {
         'reslutDictionary':{
             'result':{}
             # 'correction':dataAfCorrection
         }
     }
+    return resultToDict(resultDict, resultIds)
+
+
+################################################################
+##                          HELPERS
+################################################################
+def resultToDict(resultDict, resultIds):
+    global cacmAfterDistribute
     for i in range(0,len(resultIds)):
-        resultDict['reslutDictionary']['result'][i] = \
-        cacmAfterDistribute.loc[cacmAfterDistribute['.I'] ==  resultIds[i]\
-            , ['.T', '.A', '.W']].to_dict()
+        temp = cacmAfterDistribute.loc[cacmAfterDistribute['.I'] == resultIds[i],\
+             ['.T', '.A', '.W', '.B']].to_dict()
+
+        tk = list(temp.keys())
+        for sk in tk:
+            k = list(temp[sk].keys())
+            temp[sk] = temp[sk][k[0]]
+
+
+        resultDict['reslutDictionary']['result'][i] = temp
+
     return resultDict
+

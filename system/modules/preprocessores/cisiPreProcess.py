@@ -49,6 +49,14 @@ def authorPreProcesse(a):
 
 ########################################################################
 
+def publicationPreProcesse(p): 
+    try:
+        return pd.to_datetime(p)
+    except:
+        return ''
+
+########################################################################        
+
 def preprocessedCisiData(dataFrame:pd.DataFrame):
     '''take pandas dataFrame with coulmns = {.I, .T, .A, .W} which contain Cisi data and preprocess it'''
     pdataFrame = pd.DataFrame()
@@ -56,19 +64,22 @@ def preprocessedCisiData(dataFrame:pd.DataFrame):
     seriesData = seriesDict.copy()
     for i in dataFrame.index:
         try:
-            tempT = tempA = tempW = None
+            tempT = tempA = tempW = tempB = None
             if not dataFrame.loc[i, '.T'] == '':
                 tempT = TitlePreProcesse(dataFrame.loc[i, '.T'])
             if not dataFrame.loc[i, '.A'] == '':
                 tempA = authorPreProcesse(dataFrame.loc[i, '.A'])
             if not dataFrame.loc[i, '.W'] == '':
                 tempW = abstractPreProcesse(dataFrame.loc[i, '.W'])
-            
+            if not dataFrame.loc[i, '.B'] == '':
+                tempB = publicationPreProcesse(dataFrame.loc[i, '.B'])            
+
 
             seriesData['.I'] = i+1
             seriesData['.T'] = tempT
             seriesData['.A'] = tempA
             seriesData['.W'] = tempW
+            seriesData['.B'] = tempB
             
             pdataFrame = pdataFrame.append(seriesData, ignore_index=True)
         except:
@@ -160,20 +171,27 @@ def preprocesseQuery(dataFrame:pd.DataFrame):
 #                           search input section
 ########################################################################
 
-def preprocesseSearchInput(data) -> pd.DataFrame:
+def preprocesseSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data)
     tempT = addMostFreq(tempW)
     tempA = ''
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
 
     seriesDict['.I'] = tempI
     seriesDict['.T'] = tempT
     seriesDict['.A'] = tempA
     seriesDict['.W'] = tempW
-
+    seriesDict['.B'] = tempB
+   
     psi = psi.append(seriesDict, ignore_index=True)
     psi.fillna('', inplace=True)
 
@@ -181,19 +199,39 @@ def preprocesseSearchInput(data) -> pd.DataFrame:
 
 ########################################################################
 
-def preprocesseStructuredSearchInput(data) -> pd.DataFrame:
+def SEAuthorPreProcesse(a):
+    tempText = a
+    tempText = toLower(tempText)
+    lis = tempText.split(' ')
+    names = ' '
+    l = []
+    for word in lis:
+          l.append(removePunctuation(word))
+    names = ' '.join(l)
+    return names
+
+########################################################################
+
+def preprocesseStructuredSearchInput(dataDic) -> pd.DataFrame:
     psi = pd.DataFrame()
     seriesDict:dict = {} 
+
+    data = dataDic.get('query')
 
     tempI = 1
     tempW = qAbstractPreProcesse(data.get('.W'))
     tempT = qTitlePreProcesse(data.get('.T'))
-    tempA = qAuthorPreProcesse(data.get('.A'))
+    tempA = SEAuthorPreProcesse(data.get('.A'))
+    try:
+        tempB = pd.to_datetime(dataDic.get('date'))
+    except:
+        tempB = ''
 
     seriesDict['.I'] = tempI
     seriesDict['.T'] = tempT
     seriesDict['.A'] = tempA
     seriesDict['.W'] = tempW
+    seriesDict['.B'] = tempB
 
     psi = psi.append(seriesDict, ignore_index=True)
     psi.fillna('', inplace=True)

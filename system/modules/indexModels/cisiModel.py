@@ -38,14 +38,12 @@ def initializeTfidfTable(data: pd.DataFrame):
 
 ########################################################################
 
-def getSimilars(query,n:int):
+def getSimilars(query):
     ''' get the most n similar documents'''
     global transformer, tfidfTable
     querytfidf = transformer.transform(query)
 
-    cos = cosine_similarity(querytfidf,tfidfTable).flatten()
-    resultList = cos.argsort(axis=0)[-n:][::-1]
-    return resultList
+    return cosine_similarity(querytfidf,tfidfTable).flatten()
 
 ########################################################################
 
@@ -55,8 +53,8 @@ def queryingData(qDataFrame:pd.DataFrame,data:pd.DataFrame, n):
     for i in qDataFrame.index:
         try:
             resultDict:dict = {}
-            tempIds:list = getSimilars(pd.DataFrame(qDataFrame.loc[qDataFrame.index == i,:]), n)
-
+            similars = getSimilars(pd.DataFrame(qDataFrame.loc[qDataFrame.index == i,:]))
+            tempIds = similars.argsort(axis=0)[-n:][::-1]  
             tempList = []
             for id in tempIds:
                 tempList.append(data.loc[id,'.I'])
@@ -70,19 +68,31 @@ def queryingData(qDataFrame:pd.DataFrame,data:pd.DataFrame, n):
     return result
 
 ########################################################################
+def absSub(a,b):
+    return abs(a-b)
+
 
 def search(qDF:pd.DataFrame,data:pd.DataFrame, n):
     ''' search for input and return list of ids of the result'''
     try:
-        resultlis = []
-        tempIds = getSimilars(qDF, n)
+        similars = getSimilars(qDF)
+        
+        tempIds = similars.argsort(axis=0)[-n:][::-1]
+        tempFrame = pd.DataFrame()
+        for id in tempIds:
+            tempFrame = tempFrame.append(data.loc[id,['.I','.B']])
+
+        if not qDF.loc[0, '.B'] == '' and not tempFrame['.B'].isnull().all():   
+            tempFrame.sort_values(by=['.B']\
+                ,key=lambda x: absSub(x, pd.to_datetime(qDF.loc[0, '.B']))\
+                    , inplace=True)
+            
+            return tempFrame.loc[:, '.I'].to_list()
+
         tempList = []
         for id in tempIds:
             tempList.append(data.loc[id,'.I'])
-
-        for id in range(0,n):
-            resultlis.append(tempList[id])
-        return resultlis
+        return tempList
     except:
         raise
 
