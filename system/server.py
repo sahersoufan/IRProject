@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 @app.route('/initialize', methods=['GET'])
 def initialize():
+    print("initialize")
     try:
         coreSys.initialize()
         return jsonify(success=True)
@@ -16,6 +17,7 @@ def initialize():
 
 @app.route('/upserver', methods=['GET'])
 def upserver():
+    print('upserver')
     try:
         coreSys.upServer()
         return jsonify(success=True)
@@ -25,6 +27,7 @@ def upserver():
 
 @app.route('/evaluate', methods=['GET'])
 def evaluateCisi():
+    print('evaluate')
     try:
         data = request.get_json(force=True)
         res = coreSys.evaluation(data)
@@ -35,11 +38,13 @@ def evaluateCisi():
 
 @app.route('/search', methods=['GET'])
 def search():
+    print('search')
     try:
         data = request.get_json(force=True)
         res = coreSys.search(data)
         return jsonify(res)  
     except:
+        raise #TODO handle
         return jsonify(success=False)
 
 @app.route('/structuredSearch', methods=['GET'])

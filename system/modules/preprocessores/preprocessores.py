@@ -165,15 +165,16 @@ correct_words = words.words()
 result = []
 
 def correctWords(text):
-    for word in text.split():
-        try:
-            temp = [(jaccard_distance(set(ngrams(word, 2)),
-                                      set(ngrams(w, 2))),w)
-                                      for w in correct_words if w[0] == word[0]]
-            result.append(sorted(temp, key = lambda val:val[0])[0][1])
-        except:
-            pass
+    try:
+        for word in text.split():
+                temp = [(jaccard_distance(set(ngrams(word, 2)),
+                                          set(ngrams(w, 2))),w)
+                                          for w in correct_words if w[0] == word[0]]
+                result.append(sorted(temp, key = lambda val:val[0])[0][1])
+        return ' '.join(result)
+    except:
+        pass
+    return ''
 
-    return ' '.join(result)
 
 ################################################################
